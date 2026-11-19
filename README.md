@@ -3,6 +3,15 @@
 An elegant Community folder manager for Microsoft Flight Simulator 2024.
 One job, done well: see what is in your Community folder, and choose what loads.
 
+> **No bloat. One thing, done really well.**
+>
+> Flight simmers already spend far too much effort getting everything configured.
+> This app removes effort instead of adding features. It manages what loads in
+> your Community folder — and refuses to be anything else. No profiles, no
+> conflict scanners, no route finders, no dashboards, no settings maze. If a
+> feature doesn't help you choose what loads, it isn't here. That restraint is
+> the point: open it, see your add-ons, click. That's the whole app.
+
 <p align="center">
   <img src="docs/screenshot.png" width="380" alt="Magenta Add-On Manager — dark theme">
   &nbsp;&nbsp;
@@ -35,8 +44,10 @@ One job, done well: see what is in your Community folder, and choose what loads.
 
 ## What it deliberately does not do
 
-No profiles, no conflict detection, no route finder, no installers, no drag-drop
-import. If a feature is not about *what loads right now*, it is not here.
+Most tools in this space keep growing — profiles, conflict detection, route
+finders, installers, drag-drop import — until managing add-ons becomes another
+chore. This one stays small on purpose. If a feature is not about *what loads
+right now*, it is not here. The restraint is the feature.
 
 ## How it works — your files never move twice
 
