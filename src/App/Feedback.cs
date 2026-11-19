@@ -16,9 +16,8 @@ public static class Feedback
 {
     public const string Email = "alan@magentadebrief.com";
 
-    // Set to the real repo once it exists; until then the GitHub button is hidden
-    // so we never ship a broken link. Email and Copy always work.
-    public const string GitHubRepoUrl = "";   // e.g. https://github.com/<you>/magenta-addon-manager
+    // The public repo. The GitHub feedback button activates because this is set.
+    public const string GitHubRepoUrl = "https://github.com/flyingsotong/magenta-addon-manager";
 
     public static string AppVersion
     {

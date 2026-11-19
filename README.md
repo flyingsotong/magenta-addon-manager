@@ -103,7 +103,7 @@ your add-ons stay exactly where they are.
 Requires the [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0).
 
 ```
-git clone https://github.com/<you>/magenta-addon-manager
+git clone https://github.com/flyingsotong/magenta-addon-manager
 cd magenta-addon-manager
 
 # run the app
