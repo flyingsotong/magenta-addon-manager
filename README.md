@@ -1,5 +1,7 @@
 # Magenta Add-On Manager
 
+<p align="center"><img src="docs/og.png" width="100%" alt="Magenta Add-On Manager — no bloat, one thing done well"></p>
+
 An elegant Community folder manager for Microsoft Flight Simulator 2024.
 One job, done well: see what is in your Community folder, and choose what loads.
 
