@@ -1,5 +1,8 @@
 # Magenta Add-On Manager
 
+[![Release](https://img.shields.io/github/v/release/flyingsotong/magenta-addon-manager?style=flat-square&color=C026D3&label=release)](https://github.com/flyingsotong/magenta-addon-manager/releases/latest)
+[![License](https://img.shields.io/github/license/flyingsotong/magenta-addon-manager?style=flat-square&color=64748B)](LICENSE)
+
 <p align="center"><img src="docs/og.png" width="100%" alt="Magenta Add-On Manager — no bloat, one thing done well"></p>
 
 An elegant Community folder manager for Microsoft Flight Simulator 2024.
@@ -111,7 +114,8 @@ yet been verified on a real install. Reports welcome.
 
 ## Install
 
-Download `Magenta Add-On Manager.exe` from the latest release and run it.
+**[Download the latest release](https://github.com/flyingsotong/magenta-addon-manager/releases/latest)** —
+grab `Magenta-Add-On-Manager-v0.3.0-win-x64.zip`, extract it, and run the exe.
 There is no installer. To remove it, delete the exe and its Start Menu shortcut;
 your add-ons stay exactly where they are.
 
