@@ -3,7 +3,11 @@
 An elegant Community folder manager for Microsoft Flight Simulator 2024.
 One job, done well: see what is in your Community folder, and choose what loads.
 
-![Magenta Add-On Manager](docs/screenshot.png)
+<p align="center">
+  <img src="docs/screenshot.png" width="380" alt="Magenta Add-On Manager — dark theme">
+  &nbsp;&nbsp;
+  <img src="docs/screenshot-light.png" width="380" alt="Magenta Add-On Manager — light theme">
+</p>
 
 ## What it does
 
@@ -74,7 +78,7 @@ Found a bug or have an idea? Click **Feedback** in the footer. The app builds a
 report with the details that make it reproducible and shows it to you before
 anything is sent:
 
-![Feedback dialog](docs/feedback.png)
+<p align="center"><img src="docs/feedback.png" width="460" alt="Feedback dialog"></p>
 
 - **Copy report** puts the whole thing on your clipboard.
 - **Email Alan** opens a pre-filled message to `alan@magentadebrief.com`.
