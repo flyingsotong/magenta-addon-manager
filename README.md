@@ -23,6 +23,10 @@ One job, done well: see what is in your Community folder, and choose what loads.
 - **Honest numbers.** Group counts describe the whole folder, the footer shows
   how much actually loads, and add-ons with unusual manifest types are shown
   under *Other* rather than guessed at.
+- **One-click feedback.** A Feedback button opens a report with the useful facts
+  already attached — version, Windows build, sim edition, paths, counts, and the
+  recent error log. You see exactly what will be sent, then copy it or email it.
+  No account needed.
 - Light and dark themes, remembered between runs.
 
 ## What it deliberately does not do
@@ -63,6 +67,21 @@ restructured until you ask for it.
 - **Bulk actions report partial failure.** If three of twenty toggles fail, you
   are told which and why.
 - While the sim is running, the app says so: changes apply on the next launch.
+
+## Feedback
+
+Found a bug or have an idea? Click **Feedback** in the footer. The app builds a
+report with the details that make it reproducible and shows it to you before
+anything is sent:
+
+![Feedback dialog](docs/feedback.png)
+
+- **Copy report** puts the whole thing on your clipboard.
+- **Email Alan** opens a pre-filled message to `alan@magentadebrief.com`.
+- **Open GitHub issue** files it on the tracker (once the repo is public).
+
+Nothing is sent automatically and there is no telemetry — you choose what leaves
+your machine.
 
 ## Requirements
 

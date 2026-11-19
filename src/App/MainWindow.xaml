@@ -210,6 +210,12 @@
     <!-- Footer: one honest total, and the quiet settings.
          Long details live in a tooltip rather than in body text. -->
     <DockPanel Grid.Row="5" Margin="0,16,0,0">
+      <!-- Feedback is a first-class action, not buried: one click opens a report
+           with diagnostics attached, sendable by email without any account. -->
+      <Button x:Name="FeedbackBtn" DockPanel.Dock="Right" Content="Feedback"
+              Style="{StaticResource SecondaryButton}" FontSize="11" Padding="14,5"
+              Click="Feedback_Click" VerticalAlignment="Center"
+              ToolTip="Tell me what you think, or report a problem"/>
       <TextBlock x:Name="VersionLine" Text="v0.1" Style="{StaticResource Caption}"
                  DockPanel.Dock="Left" VerticalAlignment="Center" Margin="0,0,16,0"/>
       <CheckBox x:Name="LightThemeCheck" Style="{StaticResource LabeledCheckbox}"

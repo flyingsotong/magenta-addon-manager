@@ -228,7 +228,7 @@ public partial class MainWindow : Window
 
         // One source of truth for the version: the assembly, not a literal.
         var v = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
-        VersionLine.Text = v is null ? "v0.2.0" : $"v{v.Major}.{v.Minor}.{v.Build}";
+        VersionLine.Text = v is null ? "v0.3.0" : $"v{v.Major}.{v.Minor}.{v.Build}";
     }
 
     private void Render()
@@ -748,6 +748,19 @@ public partial class MainWindow : Window
         FolderDot.Foreground = (Brush)FindResource(automatic ? "GoodBrush" : "AccentBrush");
         FolderWord.Foreground = (Brush)FindResource(automatic ? "TextBrush" : "MutedBrush");
         FolderWord.Text = automatic ? "FOLDER FOUND" : "FOLDER BY HAND";
+    }
+
+    private void Feedback_Click(object sender, RoutedEventArgs e)
+    {
+        int active = 0, total = 0;
+        if (_jm is not null)
+        {
+            var all = Scanner.Scan(_jm.Community, _jm.Inactive);
+            total = all.Count;
+            active = all.Count(a => a.IsActive);
+        }
+        var dlg = new FeedbackWindow(_location, _jm, active, total) { Owner = this };
+        dlg.ShowDialog();
     }
 
     // ---- custom window chrome -------------------------------------------
