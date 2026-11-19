@@ -1,0 +1,226 @@
+<Window x:Class="MagentaAddOnManager.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:shell="clr-namespace:System.Windows.Shell;assembly=PresentationFramework"
+        Title="Magenta Add-On Manager"
+        Icon="app.ico"
+        Width="800" Height="1000" MinWidth="680" MinHeight="620"
+        Background="{DynamicResource WindowBrush}"
+        Foreground="{DynamicResource TextBrush}"
+        FontFamily="Segoe UI Variable Text, Segoe UI, sans-serif"
+        FontSize="12"
+        WindowStyle="None"
+        ResizeMode="CanResize"
+        WindowStartupLocation="CenterScreen">
+
+  <!-- The compositor still owns the edges and the rounded corners; we only draw
+       what is inside. Drag and double-click are handled in code so the whole bar
+       behaves like a title bar without stealing clicks from its buttons. -->
+  <shell:WindowChrome.WindowChrome>
+    <shell:WindowChrome CaptionHeight="0" ResizeBorderThickness="6"
+                        CornerRadius="0" GlassFrameThickness="0"
+                        UseAeroCaptionButtons="False"/>
+  </shell:WindowChrome.WindowChrome>
+
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto"/>  <!-- custom title bar -->
+      <RowDefinition Height="*"/>     <!-- window content -->
+    </Grid.RowDefinitions>
+
+    <!-- Title bar: identity left, state and controls right. Same construction as
+         the bridge, so the two apps read as one family. -->
+    <Grid x:Name="TitleBar" Grid.Row="0" Height="58"
+          Background="{DynamicResource WindowBrush}"
+          MouseLeftButtonDown="TitleBar_MouseDown">
+      <DockPanel Margin="24,0,12,0" VerticalAlignment="Center">
+
+        <!-- Window controls, far right -->
+        <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" VerticalAlignment="Center">
+          <Button Style="{StaticResource ChromeButton}" Content="&#xE921;"
+                  Click="Minimise_Click" ToolTip="Minimise"/>
+          <Button Style="{StaticResource ChromeButton}" Content="&#xE922;"
+                  Click="Maximise_Click" ToolTip="Maximise"/>
+          <Button Style="{StaticResource ChromeCloseButton}" Content="&#xE8BB;"
+                  Click="Close_Click" ToolTip="Close"/>
+        </StackPanel>
+
+        <!-- State, right of centre -->
+        <StackPanel DockPanel.Dock="Right" Orientation="Horizontal"
+                    VerticalAlignment="Center" Margin="0,0,18,0">
+          <TextBlock x:Name="SimPill" FontSize="10" FontWeight="SemiBold">
+            <Run x:Name="SimDot" Text="&#x25CF; "/>
+            <Run x:Name="SimWord" Text="SIM"/>
+          </TextBlock>
+          <TextBlock x:Name="FolderPill" FontSize="10" FontWeight="SemiBold" Margin="16,0,0,0">
+            <Run x:Name="FolderDot" Text="&#x25CF; "/>
+            <Run x:Name="FolderWord" Text="FOLDER"/>
+          </TextBlock>
+        </StackPanel>
+
+        <!-- Identity: the brand lockup itself, not a typed approximation. The kit
+             supplies an ink lockup for light and a reverse one for dark, so each
+             theme dictionary carries its own LogoImage. The lockup already names
+             the publisher, so only the product name sits beside it — a second
+             "Community folder" line here duplicated the path below and made the
+             header read as two competing titles. -->
+        <StackPanel DockPanel.Dock="Left" Orientation="Horizontal" VerticalAlignment="Center">
+          <Image Source="{DynamicResource LogoImage}" Height="22"
+                 Stretch="Uniform" VerticalAlignment="Center"/>
+          <TextBlock Text="Add-On Manager" FontSize="14" FontWeight="SemiBold"
+                     Foreground="{DynamicResource TextBrush}"
+                     VerticalAlignment="Center" Margin="18,0,0,0"/>
+        </StackPanel>
+
+        <Border/>  <!-- absorbs the remaining space so the bar drags anywhere -->
+      </DockPanel>
+    </Grid>
+
+    <Grid Grid.Row="1" Margin="26,0,26,22">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto"/>  <!-- path, edition, search -->
+        <RowDefinition Height="Auto"/>  <!-- explanation -->
+        <RowDefinition Height="Auto"/>  <!-- bulk -->
+        <RowDefinition Height="Auto"/>  <!-- ordering, above the list it orders -->
+        <RowDefinition Height="*"/>     <!-- list -->
+        <RowDefinition Height="Auto"/>  <!-- footer -->
+      </Grid.RowDefinitions>
+    <DockPanel Grid.Row="0" Margin="0,0,0,14">
+      <!-- Search filters the list below, so it is pinned to the right edge of the
+           list it acts on. It is not related to the folder controls. -->
+      <Grid DockPanel.Dock="Right" Width="180" Margin="0,0,0,0" VerticalAlignment="Center">
+        <Border Background="{DynamicResource SurfaceBrush}"
+                BorderBrush="{DynamicResource StrokeBrush}"
+                BorderThickness="1" CornerRadius="8"/>
+        <Grid Margin="10,5">
+          <TextBlock x:Name="SearchHint" Text="Search" FontSize="11"
+                     Foreground="{DynamicResource DimBrush}" IsHitTestVisible="False"
+                     VerticalAlignment="Center"/>
+          <TextBox x:Name="SearchBox" Background="Transparent" BorderThickness="0"
+                   Foreground="{DynamicResource TextBrush}" FontSize="11"
+                   CaretBrush="{DynamicResource AccentBrush}"
+                   VerticalAlignment="Center"
+                   TextChanged="SearchBox_TextChanged"
+                   PreviewKeyDown="SearchBox_PreviewKeyDown"/>
+        </Grid>
+      </Grid>
+
+      <!-- One statement: where your add-ons live, which install it belongs to, and
+           the action that changes it — kept together because they are one subject.
+           "Change" used to sit at the far right beside Search, which read as though
+           the two were related and left the action detached from its object. -->
+      <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+        <TextBlock x:Name="PathLine" Style="{StaticResource PathText}"
+                   VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
+        <TextBlock Text="&#x00B7;" Style="{StaticResource Small}"
+                   VerticalAlignment="Center" Margin="10,0,10,0"/>
+        <TextBlock x:Name="EditionLabel" Style="{StaticResource Small}"
+                   Foreground="{DynamicResource DimBrush}"
+                   VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
+        <Button x:Name="ChangeFolder" Content="Change" Margin="14,0,0,0"
+                Style="{StaticResource GhostButton}" Click="ChangeFolder_Click"
+                ToolTip="Pick your Community folder by hand"/>
+        <Button x:Name="RescanButton" Content="Rescan" Margin="10,0,0,0"
+                Style="{StaticResource GhostButton}" Click="Rescan_Click"
+                ToolTip="Look again for add-ons added since this window opened (F5)"/>
+      </StackPanel>
+    </DockPanel>
+
+    <!-- How it works. Plain words, no jargon. Dismissable but shown first. -->
+    <StackPanel Grid.Row="1">
+      <Border x:Name="ExplainPanel" Margin="0,0,0,16"
+              Background="{DynamicResource NoticeBgBrush}" BorderBrush="{DynamicResource NoticeBorderBrush}" BorderThickness="1"
+              CornerRadius="16" Padding="16,12">
+        <DockPanel>
+          <Button DockPanel.Dock="Right" Content="dismiss" Style="{StaticResource GhostButton}"
+                  Click="DismissExplain_Click" Margin="12,0,0,0"/>
+          <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="{DynamicResource NoticeTextBrush}">
+            <Run Text="Your add-ons never move. " FontWeight="SemiBold"/>
+            <Run Text="Turning one off only removes its shortcut in Community — the folder stays put, and switching back is instant."/>
+          </TextBlock>
+        </DockPanel>
+      </Border>
+
+      <!-- Shown only while the simulator is open. Editing Community is harmless,
+           but the sim will not notice until the next launch — and quietly doing
+           nothing is the failure this app exists to prevent. -->
+      <Border x:Name="SimPanel" Margin="0,0,0,16" Visibility="Collapsed"
+              Background="{DynamicResource NoticeBgBrush}" BorderBrush="{DynamicResource NoticeBorderBrush}" BorderThickness="1"
+              CornerRadius="16" Padding="16,12">
+        <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="{DynamicResource NoticeTextBrush}">
+          <Run Text="The simulator is running. " FontWeight="SemiBold"/>
+          <Run Text="Your changes are saved, but Microsoft Flight Simulator only reads this folder when it starts — so they take effect on your next launch."/>
+        </TextBlock>
+      </Border>
+    </StackPanel>
+
+    <!-- Bulk actions: always visible, never hidden in a drawer. -->
+    <WrapPanel Grid.Row="2" Margin="0,0,0,4">
+      <TextBlock Text="QUICK SET" Style="{StaticResource Caption}"
+                 VerticalAlignment="Center" Width="62" Margin="0,0,8,0"/>
+      <!-- Five peer operations of equal weight: same shape, same radius, same
+           emphasis. The amber "primary pill" belongs to a screen with one primary
+           action, not to a row of alternatives. State, not colour, says which of
+           these can do anything right now. -->
+      <Button x:Name="EnableAllBtn" Content="Enable everything" Style="{StaticResource SecondaryButton}"
+              Click="EnableAll_Click" Margin="0,0,8,0"/>
+      <Button x:Name="DisableAllBtn" Content="Disable everything" Style="{StaticResource SecondaryButton}"
+              Click="DisableAll_Click" Margin="0,0,8,0"/>
+      <Button x:Name="AircraftOnlyBtn" Content="Aircraft only" Style="{StaticResource SecondaryButton}"
+              Click="AircraftOnly_Click" Margin="0,0,8,0"/>
+      <Button x:Name="SceneryOnlyBtn" Content="Scenery only" Style="{StaticResource SecondaryButton}"
+              Click="SceneryOnly_Click" Margin="0,0,8,0"/>
+      <Button x:Name="LiveriesOnlyBtn" Content="Liveries only" Style="{StaticResource SecondaryButton}"
+              Click="LiveriesOnly_Click" Margin="0,0,8,0"/>
+      <Button x:Name="UndoButton" Content="Undo" Style="{StaticResource GhostButton}" Click="Undo_Click"/>
+    </WrapPanel>
+
+    <!-- Ordering sits directly above the list it orders. In the footer it was the
+         furthest control from its effect: you changed it and the result happened
+         above you, off screen.
+
+         It is one segmented control, not four loose words: the options are a single
+         setting, so they share one container and the chosen one is a filled
+         segment. Bare text with the selected word merely coloured made the same
+         kind of control look like something else entirely than the row above. -->
+    <DockPanel Grid.Row="3" Margin="0,10,0,6">
+      <TextBlock Text="SORT BY" Style="{StaticResource Caption}" VerticalAlignment="Center"
+                 Width="62" Margin="0,0,8,0"/>
+      <Border Background="Transparent" BorderBrush="{DynamicResource StrokeBrush}"
+              BorderThickness="1" CornerRadius="9" Padding="2"
+              VerticalAlignment="Center">
+        <StackPanel Orientation="Horizontal">
+          <Button x:Name="SortName" Content="Name" Tag="Name" Style="{StaticResource SegmentButton}" Click="Sort_Click"/>
+          <Button x:Name="SortSize" Content="Size" Tag="Size" Style="{StaticResource SegmentButton}" Click="Sort_Click"/>
+          <Button x:Name="SortRecent" Content="Recent" Tag="Recent" Style="{StaticResource SegmentButton}" Click="Sort_Click"/>
+          <Button x:Name="SortStatus" Content="Status" Tag="Status" Style="{StaticResource SegmentButton}"
+                  Click="Sort_Click" ToolTip="Loaded add-ons first, ignored ones after"/>
+        </StackPanel>
+      </Border>
+      <Border/>  <!-- absorbs the rest so the row keeps its height -->
+    </DockPanel>
+
+    <!-- The list. Nothing here collapses; every add-on is reachable. -->
+    <ScrollViewer x:Name="ListScroll" Grid.Row="4" VerticalScrollBarVisibility="Auto"
+                  HorizontalScrollBarVisibility="Disabled"
+                  Padding="0,0,14,0">
+      <StackPanel x:Name="Groups"/>
+    </ScrollViewer>
+
+    <!-- Footer: one honest total, and the quiet settings.
+         Long details live in a tooltip rather than in body text. -->
+    <DockPanel Grid.Row="5" Margin="0,16,0,0">
+      <TextBlock x:Name="VersionLine" Text="v0.1" Style="{StaticResource Caption}"
+                 DockPanel.Dock="Left" VerticalAlignment="Center" Margin="0,0,16,0"/>
+      <CheckBox x:Name="LightThemeCheck" Style="{StaticResource LabeledCheckbox}"
+                Content="Light theme" FontSize="10"
+                Foreground="{DynamicResource MutedBrush}"
+                DockPanel.Dock="Left" VerticalAlignment="Center" Margin="0,0,18,0"
+                Checked="LightTheme_Changed" Unchecked="LightTheme_Changed"
+                ToolTip="Light or dark appearance"/>
+      <TextBlock x:Name="StatusLine" Style="{StaticResource Caption}" DockPanel.Dock="Left"
+                 VerticalAlignment="Center"/>
+    </DockPanel>
+    </Grid>
+  </Grid>
+</Window>

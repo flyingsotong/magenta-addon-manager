@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+    <UseWPF>true</UseWPF>
+    <UseWindowsForms>false</UseWindowsForms>
+    <AssemblyName>Magenta Add-On Manager</AssemblyName>
+    <RootNamespace>MagentaAddOnManager</RootNamespace>
+    <ApplicationHighDpiMode>PerMonitorV2</ApplicationHighDpiMode>
+    <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
+    <ApplicationIcon>app.ico</ApplicationIcon>
+    <Version>0.2.0</Version>
+    <FileVersion>0.2.0.0</FileVersion>
+    <Product>Magenta Add-On Manager</Product>
+    <AssemblyTitle>Magenta Add-On Manager</AssemblyTitle>
+    <Company>Magenta Debrief</Company>
+    <Description>An elegant Community folder manager for Microsoft Flight Simulator 2024.</Description>
+    <Copyright>MIT licensed. Copyright (c) 2026 Alan Soon.</Copyright>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Resource Include="app.ico" />
+    <Resource Include="assets\brand\lockup-light.png" />
+    <Resource Include="assets\brand\lockup-dark.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Core\Core.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,40 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+  <!-- DSH light palette: bg-module-platform neutral-bluish-60, white cards,
+       accent state-business-primary (deepseek-500), borders border-l2.
+       Cool neutral-blues only — no warm paper, no sand. -->
+
+  <!-- Brand lockup for this theme: ink with the magenta underscore. -->
+  <BitmapImage x:Key="LogoImage" UriSource="assets/brand/lockup-light.png"/>
+
+  <SolidColorBrush x:Key="WindowBrush"        Color="#FFF5F6F7"/>
+  <SolidColorBrush x:Key="SurfaceBrush"       Color="#FFFFFFFF"/>
+  <SolidColorBrush x:Key="SurfaceHover"       Color="#FFF0F1F3"/>
+  <SolidColorBrush x:Key="HoverBrush"         Color="#FFF0F1F3"/>
+  <!-- Selected segment: accent tint, so selection reads the same way in both themes. -->
+  <SolidColorBrush x:Key="SegmentSelectedBrush" Color="#1F4176E6"/>
+  <SolidColorBrush x:Key="PressBrush"         Color="#FFE4E6E9"/>
+  <SolidColorBrush x:Key="StrokeBrush"        Color="#14000000"/>
+  <SolidColorBrush x:Key="TextBrush"          Color="#FF0F1115"/>
+  <SolidColorBrush x:Key="MutedBrush"         Color="#FF61666B"/>
+  <SolidColorBrush x:Key="DimBrush"           Color="#FF81858C"/>
+  <SolidColorBrush x:Key="AccentBrush"        Color="#FF4176E6"/>
+  <SolidColorBrush x:Key="AccentHoverBrush"   Color="#FF5686FE"/>
+  <SolidColorBrush x:Key="AccentPressedBrush" Color="#FF2563EB"/>
+  <SolidColorBrush x:Key="OnAccentBrush"      Color="#FFFFFFFF"/>
+  <SolidColorBrush x:Key="GoodBrush"          Color="#FF22C55E"/>
+  <SolidColorBrush x:Key="BadBrush"           Color="#FFEF4444"/>
+  <SolidColorBrush x:Key="ThumbBrush"         Color="#FFD4D4D4"/>
+  <SolidColorBrush x:Key="ThumbHoverBrush"    Color="#FFADB2B8"/>
+  <SolidColorBrush x:Key="FocusFillBrush"     Color="#FFEFF1F4"/>
+  <SolidColorBrush x:Key="ChromeHoverBrush"   Color="#FFEEF0F3"/>
+  <SolidColorBrush x:Key="ChromeCloseBrush"   Color="#FF0F1115"/>
+  <SolidColorBrush x:Key="NoticeBgBrush"      Color="#FFEFF6FF"/>
+  <SolidColorBrush x:Key="NoticeBorderBrush"  Color="#FFDBEAFE"/>
+  <SolidColorBrush x:Key="NoticeTextBrush"    Color="#FF1E40AF"/>
+  <SolidColorBrush x:Key="WarnBgBrush"        Color="#FFFEF2F2"/>
+  <SolidColorBrush x:Key="WarnBorderBrush"    Color="#FFFEE2E2"/>
+  <SolidColorBrush x:Key="WarnTextBrush"      Color="#FF991B1B"/>
+
+</ResourceDictionary>

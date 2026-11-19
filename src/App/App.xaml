@@ -1,0 +1,14 @@
+<Application x:Class="MagentaAddOnManager.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <Application.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <!-- Theme first so the styles below can resolve their brushes. Theme.Apply
+             swaps this entry wholesale; nothing else needs to know the theme. -->
+        <ResourceDictionary Source="ThemeDark.xaml"/>
+        <ResourceDictionary Source="DesignLanguage.xaml"/>
+      </ResourceDictionary.MergedDictionaries>
+    </ResourceDictionary>
+  </Application.Resources>
+</Application>
