@@ -1,5 +1,7 @@
 using System;
 using System.IO;
+using System.Runtime.InteropServices;
+using System.Threading;
 using System.Windows;
 using System.Windows.Threading;
 
@@ -7,8 +9,25 @@ namespace MagentaAddOnManager;
 
 public partial class App : Application
 {
+    // Held for the lifetime of the process so the GC cannot release it early.
+    // A second launch fails to create it and defers to the first instance.
+    private Mutex? _singleInstance;
+
+    private const string MutexName = @"Local\MagentaAddOnManager.SingleInstance.7f3a9c";
+    private const string WindowTitle = "Magenta Add-On Manager";
+
     protected override void OnStartup(StartupEventArgs e)
     {
+        _singleInstance = new Mutex(true, MutexName, out var createdNew);
+        if (!createdNew)
+        {
+            // Already running: surface the existing window instead of opening a
+            // second copy that would fight over the same Community folder.
+            ActivateExisting();
+            Shutdown();
+            return;
+        }
+
         base.OnStartup(e);
 
         // A UI exception must never kill the app. Log it, say so honestly, carry
@@ -22,6 +41,32 @@ public partial class App : Application
 
         new MainWindow().Show();
     }
+
+    protected override void OnExit(ExitEventArgs e)
+    {
+        try { _singleInstance?.ReleaseMutex(); } catch { }
+        _singleInstance?.Dispose();
+        base.OnExit(e);
+    }
+
+    private static void ActivateExisting()
+    {
+        var hwnd = FindWindow(null, WindowTitle);
+        if (hwnd == IntPtr.Zero) return;
+        ShowWindow(hwnd, SW_RESTORE);   // un-minimise if needed
+        SetForegroundWindow(hwnd);
+    }
+
+    private const int SW_RESTORE = 9;
+
+    [DllImport("user32.dll", CharSet = CharSet.Unicode)]
+    private static extern IntPtr FindWindow(string? lpClassName, string lpWindowName);
+
+    [DllImport("user32.dll")]
+    private static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+
+    [DllImport("user32.dll")]
+    private static extern bool SetForegroundWindow(IntPtr hWnd);
 
     private void OnUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
     {
