@@ -82,7 +82,7 @@ anything is sent:
 
 - **Copy report** puts the whole thing on your clipboard.
 - **Email Alan** opens a pre-filled message to `alan@magentadebrief.com`.
-- **Open GitHub issue** files it on the tracker (once the repo is public).
+- **Open GitHub issue** files it on the [issue tracker](https://github.com/flyingsotong/magenta-addon-manager/issues).
 
 Nothing is sent automatically and there is no telemetry — you choose what leaves
 your machine.
